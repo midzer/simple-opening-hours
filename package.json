@@ -1,17 +1,17 @@
 {
-  "name": "simple-opening-hours",
-  "version": "1.0.0",
+  "name": "lehrenfried-simple-opening-hours",
+  "version": "1.0.1",
   "description": "Less crazy opening hours parser",
   "main": "dist/simple-opening-hours.js",
   "directories": {
     "example": "example",
     "test": "test"
   },
-  "dependencies": {},
   "devDependencies": {
     "eslint": "^3.16.1",
     "tap": "^10.2.1",
-    "nodemon": "1.11.0"
+    "nodemon": "1.11.0",
+    "typescript": "^3.8.3"
   },
   "scripts": {
     "test": "tap test/*.js --cov",

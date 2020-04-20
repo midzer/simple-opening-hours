@@ -2,3 +2,4 @@ openingparser-tests._ts
 tasks.json
 node_modules
 .nyc_output
+package-lock.json
