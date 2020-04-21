@@ -68,3 +68,20 @@ t.test("Time tables", t => {
     t.equal(result, "Mon 06:00-14:00\nTue 06:00-14:00\nWed 06:00-14:00\nThu 06:00-14:00\nFri 06:00-14:00\nSat 06:00-14:00\nSun Closed")
     t.end()
 })
+
+t.test("Semicolons", t => {
+    const table = (new oh("Mo-Fr 07:00-22:00; Sa 07:00-22:00; PH off")).getTable()
+    t.same(table, {
+        su: [],
+        mo: ["07:00-22:00"],
+        tu: ["07:00-22:00"],
+        we: ["07:00-22:00"],
+        th: ["07:00-22:00"],
+        fr: ["07:00-22:00"],
+        sa: ["07:00-22:00"],
+        ph: [],
+
+    })
+    t.end()
+})
+

@@ -44,10 +44,10 @@ export default class SimpleOpeningHours {
 	 * Parses the input and creates openingHours Object
 	 */
 	private parse(input:string) {
-		if (/24\s*?\/\s*?7/.test(input)) {
+		if (/^\s*24\s*?\/\s*?7\s*$/.test(input)) {
 			this.openingHours = this.alwaysOpen = true;
 			return
-		} else if (/\s*off\s*/.test(input)) {
+		} else if (/^\s*off\s*$/.test(input)) {
 			this.openingHours = false
 			this.alwaysClosed = true
 			return
