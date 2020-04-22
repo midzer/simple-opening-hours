@@ -46,7 +46,17 @@ var SimpleOpeningHours = /** @class */ (function () {
     SimpleOpeningHours.prototype.parse = function (input) {
         var _this = this;
         if (/^\s*24\s*?\/\s*?7\s*$/.test(input)) {
-            this.openingHours = this.alwaysOpen = true;
+            this.openingHours = {
+                mo: ["00:00-24:00"],
+                tu: ["00:00-24:00"],
+                we: ["00:00-24:00"],
+                th: ["00:00-24:00"],
+                fr: ["00:00-24:00"],
+                sa: ["00:00-24:00"],
+                su: ["00:00-24:00"],
+                ph: ["00:00-24:00"]
+            };
+            this.alwaysOpen = true;
             return;
         }
         else if (/^\s*off\s*$/.test(input)) {
