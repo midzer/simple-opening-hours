@@ -1,6 +1,5 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.map = void 0;
 var SimpleOpeningHours = /** @class */ (function () {
     /**
      * Creates the OpeningHours Object with OSM opening_hours string
@@ -96,7 +95,7 @@ var SimpleOpeningHours = /** @class */ (function () {
             var openTimes = [];
             // If part has the closing hours.
             if (parts[p].indexOf('off') !== -1) {
-                // Handle if no start or end time is found yet.
+                // If no start or end time is found yet, add part to the end of the list.
                 if (univStart == undefined || univEnd == undefined) {
                     parts.push(parts[p]);
                 }

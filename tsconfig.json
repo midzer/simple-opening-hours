@@ -6,7 +6,7 @@
         "removeComments": false,
         "preserveConstEnums": true,
         "sourceMap": true,
-        "watch": true,
+        "watch": false,
         "outDir": "./dist"
     },
     "exclude": []
