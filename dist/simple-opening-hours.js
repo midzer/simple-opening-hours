@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.map = void 0;
 var SimpleOpeningHours = /** @class */ (function () {
     /**
      * Creates the OpeningHours Object with OSM opening_hours string
@@ -59,6 +60,10 @@ var SimpleOpeningHours = /** @class */ (function () {
             this.alwaysOpen = true;
             return;
         }
+        else if (/^.*[0-9]{2}:[0-9]{2}\s*off.*$/.test(input)) {
+            this.init();
+            return this.parseClosingHours(input);
+        }
         else if (/^\s*off\s*$/.test(input)) {
             this.openingHours = false;
             this.alwaysClosed = true;
@@ -69,6 +74,85 @@ var SimpleOpeningHours = /** @class */ (function () {
         parts.forEach(function (part) {
             _this.parseHardPart(part);
         });
+    };
+    SimpleOpeningHours.prototype.parseClosingHours = function (input) {
+        var tempData = {
+            su: [],
+            mo: [],
+            tu: [],
+            we: [],
+            th: [],
+            fr: [],
+            sa: [],
+            ph: []
+        };
+        var univStart;
+        var univEnd;
+        var parts = input.toLowerCase().split(";");
+        var _loop_1 = function (p) {
+            parts[p] = parts[p].trim();
+            var segments = parts[p].split(' ');
+            var days = void 0;
+            var openTimes = [];
+            // If part has the closing hours.
+            if (parts[p].indexOf('off') !== -1) {
+                // Handle if no start or end time is found yet.
+                if (univStart == undefined || univEnd == undefined) {
+                    parts.push(parts[p]);
+                }
+                else {
+                    days = this_1.parseDays(segments[0]);
+                    var closeTimes = [];
+                    // Split closing times into array of times.
+                    // parts[0]: days, parts[last]: 'off'
+                    for (var i = 1; i < segments.length - 1; i++) {
+                        segments[i] = segments[i].replace(',', '');
+                        var tmp = segments[i].split('-');
+                        closeTimes.push(tmp[0]);
+                        closeTimes.push(tmp[1]);
+                    }
+                    // Switch closing hours to opening hours.
+                    for (var i = 0; i < closeTimes.length; i++) {
+                        if (i == 0) {
+                            openTimes.push(univStart + "-" + closeTimes[i]);
+                        }
+                        else if (i == closeTimes.length - 1) {
+                            openTimes.push(closeTimes[i] + "-" + univEnd);
+                        }
+                        else {
+                            openTimes.push(closeTimes[i] + "-" + closeTimes[++i]);
+                        }
+                    }
+                    days.forEach(function (day) {
+                        tempData[day] = openTimes;
+                    });
+                }
+                // If part has the universal opening hours.
+            }
+            else if (segments.length == 1) {
+                var tmp = parts[p].split('-');
+                univStart = tmp[0];
+                univEnd = tmp[1];
+                for (var key in tempData) {
+                    tempData[key].push(parts[p]);
+                }
+                // If part has basic opening hours.
+            }
+            else {
+                var days_1 = this_1.parseDays(segments[0]);
+                openTimes.push(segments[1]);
+                days_1.forEach(function (day) {
+                    tempData[day] = openTimes;
+                });
+            }
+        };
+        var this_1 = this;
+        for (var p = 0; p < parts.length; p++) {
+            _loop_1(p);
+        }
+        for (var key in tempData) {
+            this.openingHours[key] = tempData[key];
+        }
     };
     SimpleOpeningHours.prototype.parseHardPart = function (part) {
         var _this = this;
