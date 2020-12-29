@@ -1,5 +1,3 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
 var SimpleOpeningHours = /** @class */ (function () {
     /**
      * Creates the OpeningHours Object with OSM opening_hours string
@@ -7,12 +5,6 @@ var SimpleOpeningHours = /** @class */ (function () {
     function SimpleOpeningHours(input) {
         this.parse(input);
     }
-    /**
-     * returns the OpeningHours Object
-     */
-    SimpleOpeningHours.prototype.getTable = function () {
-        return typeof this.openingHours === "object" ? this.openingHours : {};
-    };
     SimpleOpeningHours.prototype.isOpen = function (date) {
         var _this = this;
         if (typeof this.openingHours === "boolean") {
@@ -334,10 +326,4 @@ var SimpleOpeningHours = /** @class */ (function () {
     };
     return SimpleOpeningHours;
 }());
-exports.default = SimpleOpeningHours;
-function map(oh, callback) {
-    var table = oh.getTable();
-    return ["mo", "tu", "we", "th", "fr", "sa", "su"].map(function (weekday, index) { return (callback(((index + 1) % 7), table[weekday])); });
-}
-exports.map = map;
 //# sourceMappingURL=simple-opening-hours.js.map

@@ -1,16 +1,9 @@
-export default class SimpleOpeningHours {
+class SimpleOpeningHours {
 	/**
 	 * Creates the OpeningHours Object with OSM opening_hours string
 	 */
 	constructor(input: string) {
 		this.parse(input);
-	}
-
-	/**
-	 * returns the OpeningHours Object
-	 */
-	public getTable() {
-		return typeof this.openingHours === "object" ? this.openingHours : {};
 	}
 
 	public isOpen(date?: Date): boolean {
@@ -337,11 +330,4 @@ export default class SimpleOpeningHours {
 	private openingHours: Object | boolean
 	private alwaysOpen?: boolean
 	private alwaysClosed?: boolean
-}
-
-export function map<T>(oh: SimpleOpeningHours, callback: (index:number, times: Array<string>)=>T): T[] {
-	const table = oh.getTable()
-	return ["mo", "tu", "we", "th", "fr", "sa", "su"].map((weekday, index) => (
-		callback(((index + 1) % 7), table[weekday])
-	))
 }
